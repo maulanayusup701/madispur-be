@@ -2,11 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-<<<<<<< HEAD
-=======
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ResetPasswordController;
->>>>>>> 47018901d5c16bd2dc359f15d356cb66f302e841
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +16,9 @@ use App\Http\Controllers\Api\ResetPasswordController;
 |
 */
 
-<<<<<<< HEAD
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-=======
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
 });
@@ -43,4 +38,3 @@ Route::middleware('guest')->group(function () {
         Route::post('passwordReset/{token}', 'passwordReset'); //proses reset password
     });
 });
->>>>>>> 47018901d5c16bd2dc359f15d356cb66f302e841

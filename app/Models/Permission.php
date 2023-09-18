@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Menu;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Permission extends Model
 {
@@ -18,5 +19,8 @@ class Permission extends Model
         'modified_by',
         'modified_date',
     ];
-    
+
+    public function menu(){
+        return $this->belongsTo(Menu::class);
+    }
 }

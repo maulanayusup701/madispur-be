@@ -3,18 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-=======
 use App\Models\Role;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
->>>>>>> 47018901d5c16bd2dc359f15d356cb66f302e841
 
 class User extends Authenticatable
 {
@@ -26,11 +19,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-<<<<<<< HEAD
         'name',
         'email',
         'password',
-=======
         'email',
         'nama_lengkap',
         'username',
@@ -48,7 +39,6 @@ class User extends Authenticatable
         'status',
         'role_id',
         'login_terakhir',
->>>>>>> 47018901d5c16bd2dc359f15d356cb66f302e841
     ];
 
     /**
@@ -70,11 +60,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-<<<<<<< HEAD
-=======
 
     public function role(){
         return $this->belongsTo(Role::class);
     }
->>>>>>> 47018901d5c16bd2dc359f15d356cb66f302e841
 }
