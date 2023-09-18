@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +22,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware('guest')->group(function () {
     Route::controller(AuthController::class)->group(function () {
-        Route::get('login', 'login')->name('login');
-        Route::post('loginStore', 'loginStore');
-        Route::get('register', 'register');
-        Route::get('registerStore', 'registerStore');
+        Route::get('login', 'login')->name('login'); //menampilkan form login
+        Route::post('loginStore', 'loginStore'); //proses authentikasi
+        Route::get('register', 'register'); //menampilkan form register
+        Route::post('registerStore', 'registerStore'); //proses registrasi
+    });
+
+    Route::controller(ResetPasswordController::class)->group(function () {
+        Route::get('passwordReset', 'emailRequest')->name('password.request'); //tampilkan form email reset password
+        Route::post('sendPasswordEmail', 'sendResetLinkEmail')->name('password.email'); //kirim email ke user
+        Route::get('passwordReset/{token}', 'showResetForm')->name('password.reset'); //tampilkan form password baru {token}
+        Route::post('passwordReset/{token}', 'passwordReset'); //proses reset password
     });
 });

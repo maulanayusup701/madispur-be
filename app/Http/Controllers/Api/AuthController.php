@@ -8,16 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
 {
-    public function login(){
-    
+    public function login()
+    {
         //
     }
-    
-    
+
     public function loginStore(Request $request)
     {
         $credentials = $request->validate([
@@ -45,9 +43,13 @@ class AuthController extends Controller
             ]);
         }
     }
-    
 
-    public function register(Request $request)
+    public function register()
+    {
+        //
+    }
+
+    public function registerStore(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'role_id' => 'required|in:3,4',
@@ -73,7 +75,6 @@ class AuthController extends Controller
             'Keperluan' => 'required|max:255',
             'status' => ['required', Rule::in(['AKTIF', 'TIDAK AKTIF']),],
         ]);
-        
 
         $customMessages = [
             'required' => 'Kolom :attribute wajib diisi.',
