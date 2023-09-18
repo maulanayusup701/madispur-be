@@ -22,13 +22,13 @@ return new class extends Migration
             $table->string('alamat_lengkap', 255);
             $table->bigInteger('NIK');
             $table->string('nama_kampus/sekolah', 255);
-            $table->string('NIM', 255);
-            $table->string('NISN', 255);
+            $table->string('NIM', 255)->nullable();
+            $table->string('NISN', 255)->nullable();
             $table->string('jurusan/prodi', 13);
             $table->bigInteger('kelas/semester');
             $table->string('Keperluan');
             $table->enum('status', ['Aktif', 'Tidak Aktif']);
-            $table->bigInteger('role_id');
+            $table->foreignId('role_id');
             $table->timestamp('login_terakhir');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
