@@ -26,7 +26,8 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $user->tokens()->delete();
-    
+            $user->login_terakhir = now();
+            $user->save();
             return response()->json([
                 'success' => true,
                 'message' => 'Login Berhasil',
@@ -96,7 +97,7 @@ class AuthController extends Controller
 
         $data = $request->all();
         $data['password'] = bcrypt($data['password']);
-        $data['login_terakhir'] = now();
+        $data['login_terakhir'] = null;
         $data['status'] = 'TIDAK AKTIF';
 
         $user = User::create($data)->sendEmailVerificationNotification();
