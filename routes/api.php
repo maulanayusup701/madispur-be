@@ -29,6 +29,7 @@ Route::middleware('guest')->group(function () {
         Route::post('loginStore', 'loginStore'); //proses authentikasi
         Route::get('register', 'register'); //menampilkan form register
         Route::post('registerStore', 'registerStore'); //proses registrasi
+        Route::get('email/{user:id}', 'emailVerify')->name('verification.verify'); //proses verification email
     });
 
     Route::controller(ResetPasswordController::class)->group(function () {

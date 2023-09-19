@@ -73,7 +73,6 @@ class AuthController extends Controller
             'jurusan/prodi' => 'required|max:255',
             'kelas/semester' => ['required', Rule::in(['1', '2', '3', '4', '5', '6', '7', '8']),],
             'Keperluan' => 'required|max:255',
-            'status' => ['required', Rule::in(['AKTIF', 'TIDAK AKTIF']),],
         ]);
 
         $customMessages = [
@@ -98,19 +97,37 @@ class AuthController extends Controller
         $data = $request->all();
         $data['password'] = bcrypt($data['password']);
         $data['login_terakhir'] = now();
-        $user = User::create($data);
+        $data['status'] = 'TIDAK AKTIF';
 
-        $success['token'] = $user->createToken('auth_token')->plainTextToken;
-        $success['nama_lengkap'] = $user->nama_lengkap;
+        $user = User::create($data)->sendEmailVerificationNotification();
 
         return response()->json([
             'success' => true,
-            'message' => 'Register Berhasil',
-            'data' => [
-                'token' => $success['token'],
-                'nama_lengkap' => $user->nama_lengkap,
-            ],
+            'message' => 'Register Berhasil, Silahkan Verifikasi Email',
+            'data' => null
         ]);
+    }
+
+    public function emailVerify(Request $request, $id){
+        $data = $request->hasValidSignature();
+        $user = User::find($id);
+
+        if($data){
+            $user->markEmailAsVerified();
+            $user->status = 'AKTIF';
+            $user->save();
+            return response()->json([
+                'success' => true,
+                'message' => 'Verifikasi Email Berhasil',
+                'data' => $user,
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Verifikasi Email Gagal',
+                'data' => null,
+            ]);
+        }
     }
 
     public function logout(Request $request){
