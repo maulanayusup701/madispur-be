@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\ResetPasswordController;
 
 /*
@@ -30,7 +31,7 @@ Route::middleware('guest')->group(function () {
         Route::post('loginStore', 'loginStore'); //proses authentikasi
         Route::get('register', 'register'); //menampilkan form register
         Route::post('registerStore', 'registerStore'); //proses registrasi
-        Route::get('email/{user:id}', 'emailVerify')->name('verification.verify'); //proses verification email
+        Route::get('email/{id}', 'emailVerify')->name('verification.verify'); //proses verification email
     });
 
     Route::controller(ResetPasswordController::class)->group(function () {
@@ -42,8 +43,9 @@ Route::middleware('guest')->group(function () {
 
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('dashboard/profile', 'profile');
+        Route::resource('dashboard/permission', PermissionController::class);
     });
 });

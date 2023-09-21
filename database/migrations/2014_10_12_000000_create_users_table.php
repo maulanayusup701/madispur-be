@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('Keperluan');
             $table->enum('status', ['Aktif', 'Tidak Aktif']);
             $table->foreignId('role_id');
-            $table->timestamp('login_terakhir');
+            $table->timestamp('login_terakhir')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

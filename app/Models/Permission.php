@@ -23,4 +23,8 @@ class Permission extends Model
     public function menu(){
         return $this->belongsTo(Menu::class);
     }
+
+    public function getAllPermission(){
+        return Permission::all();
+    }
 }
