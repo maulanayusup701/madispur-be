@@ -20,4 +20,8 @@ class Menu extends Model
     public function permission(){
         return $this->hasMany(Permission::class);
     }
+
+    public function getAllMenu(){
+        return Menu::all();
+    }
 }
