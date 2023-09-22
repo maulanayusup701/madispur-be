@@ -24,4 +24,8 @@ class Menu extends Model
     public function getAllMenu(){
         return Menu::all();
     }
+
+    public function getMenuSearch($search){
+        return Menu::where('nama', 'like', '%'.$search.'%')->get();
+    }
 }

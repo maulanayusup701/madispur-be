@@ -46,6 +46,6 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('dashboard/profile', 'profile');
-        Route::resource('dashboard/menu', MenuController::class);
     });
+    Route::resource('dashboard/menu', MenuController::class);
 });
