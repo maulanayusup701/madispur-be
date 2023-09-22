@@ -3,41 +3,41 @@
 namespace App\Http\Controllers\Api;
 
 use Validator;
-use App\Models\permission;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PermissionResource;
+use App\Http\Resources\MenuResource;
+use App\Http\Resources\DetailMenuResource;
 use Illuminate\Pagination\LengthAwarePaginator;
-use App\Http\Resources\DetailPermissionResource;
 
-class PermissionController extends Controller
+class MenuController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
 
     public function __construct(){
-        $this->permission = new Permission();
+        $this->menu = new Menu();
     }
 
-    public function index()
+    public function index() 
     {
-        $permissions = PermissionResource::collection($this->permission->getAllPermission());
+        $menus = MenuResource::collection($this->menu->getAllMenu());
         $paginate = new LengthAwarePaginator(
-            $permissions->items(),
-            $permissions->total(),
-            $permissions->perPage(),
-            $permissions->currentPage()
+            $menus->items(),
+            $menus->total(),
+            $menus->perPage(),
+            $menus->currentPage()
         );
 
         return response()->json([
             'success' => true,
-            'message' => 'list Permission',
+            'message' => 'list Menu',
             'data' => [
                 'current_page' => $paginate->currentPage(),
                 'total' => $paginate->total(),
                 'per_page' => $paginate->perPage(),
-                'data' => PermissionResource::collection($paginate),
+                'data' => MenuResource::collection($paginate),
             ],
         ]);
     }
@@ -57,7 +57,10 @@ class PermissionController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'nama' => 'required',
-            'deskripsi' => 'required'
+            'deskripsi' => 'required',
+            'route' => 'required',
+            'icon' =>  'required',
+
         ]);
 
         $customMessages = [
@@ -75,46 +78,39 @@ class PermissionController extends Controller
         }
 
         $data = $request->all();
-        $data['menu_id'] = 1;
-        $data['created_by'] = auth()->user()->username;
-        $data['created_date'] = now();
-        $data['modified_by'] = auth()->user()->username;
-        $data['modified_date'] = now();
-
-        Permission::create($data);
+        Menu::create($data);
 
         return response()->json([
             'status' => true,
-            'message' => 'Data Permission berhasil di simpan',
+            'message' => 'Data Menu berhasil di simpan',
             'data' => null,
         ]);
-        
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Permission $permission)
-    {
+    public function show(Menu $menu)
+    {   
         return response()->json([
             'status' => true,
-            'message' => 'data berhasil ditemukan',
-            'data' => new DetailPermissionResource($permission),
+            'message' => 'Data Menu berhasil di temukan',
+            'data' => new DetailMenuResource($menu),
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Permission $permission)
+    public function edit(Menu $menu)
     {
-       //
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Permission $permission)
+    public function update(Request $request, Menu $menu)
     {
         $validator = Validator::make($request->all(),[
             'nama' => 'required',
@@ -136,15 +132,12 @@ class PermissionController extends Controller
         }
 
         $data = $request->all();
-        $data['menu_id'] = 1;
-        $data['modified_by'] = auth()->user()->username;
-        $data['modified_date'] = now();
 
-        $permission->update($data);
+        $menu->update($data);
 
         return response()->json([
             'status' => true,
-            'message' => 'Data Permission berhasil di update',
+            'message' => 'Data Menu berhasil di update',
             'data' => null
         ]);
     }
@@ -152,13 +145,13 @@ class PermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(permission $permission)
+    public function destroy(Menu $menu)
     {
-        Permission::destroy($permission->id);
+        Menu::destroy($menu->id);
 
         return response()->json([
             'status' => true,
-            'message' => 'Data Permission berhasil di hapus',
+            'message' => 'Data Menu berhasil di hapus',
             'data' => null
         ]);
     }

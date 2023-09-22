@@ -16,10 +16,6 @@ class DashboardController extends Controller
 
     public function profile()
     {
-        return response()->json([
-            'success' => true,
-            'message' => 'success',
-            'data' => new ProfileResource($this->profile->getProfileUser())
-        ], 200);
+        return new ProfileResource($this->profile->getProfileUser());
     }
 }

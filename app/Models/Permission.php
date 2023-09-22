@@ -25,10 +25,10 @@ class Permission extends Model
     }
 
     public function getAllPermission(){
-        return Permission::all();
+        return Permission::paginate(10);
     }
 
     public function getPermissionSearch($search){
-        return Permission::where('nama', 'like', '%'.$search.'%')->get();
+        return $search == null ? Permission::all()->paginate(10):Permission::where('nama', 'like', '%'.$search.'%')->paginate(10);
     }
 }

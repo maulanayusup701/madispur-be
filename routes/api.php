@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\PermissionController;
@@ -50,4 +51,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
     Route::resource('dashboard/permission', PermissionController::class);
     Route::post('dashboard/permission/search', [SearchController::class, 'permissionSearch']);
+    Route::resource('dashboard/menu', MenuController::class);
+    Route::post('dashboard/menu/search', [SearchController::class, 'menuSearch']);
 });

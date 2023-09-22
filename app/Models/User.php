@@ -19,7 +19,6 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
         'password',
         'email',
@@ -66,7 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function getProfileUser(){
-        $user = auth()->user()->get();
+        $user = auth()->user();
         return $user;
     }
 }

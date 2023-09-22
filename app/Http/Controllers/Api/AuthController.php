@@ -28,6 +28,7 @@ class AuthController extends Controller
             $user->tokens()->delete();
             $user->login_terakhir = now();
             $user->save();
+
             return response()->json([
                 'success' => true,
                 'message' => 'Login Berhasil',
@@ -36,6 +37,7 @@ class AuthController extends Controller
                     'nama_lengkap' => $user->nama_lengkap,
                 ],
             ]);
+
         } else {
             return response()->json([
                 'success' => false,
@@ -120,8 +122,9 @@ class AuthController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Verifikasi Email Berhasil',
-                'data' => $user,
+                'data' => null,
             ]);
+
         }else{
             return response()->json([
                 'success' => false,
