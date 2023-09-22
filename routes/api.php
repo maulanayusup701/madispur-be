@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\SearchController;
+use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\ResetPasswordController;
 
 /*
@@ -42,8 +44,10 @@ Route::middleware('guest')->group(function () {
 
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('dashboard/profile', 'profile');
     });
+    Route::resource('dashboard/permission', PermissionController::class);
+    Route::post('dashboard/permission/search', [SearchController::class, 'permissionSearch']);
 });
