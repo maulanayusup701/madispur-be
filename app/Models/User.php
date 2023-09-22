@@ -69,4 +69,12 @@ class User extends Authenticatable implements MustVerifyEmail
         $user = auth()->user()->get();
         return $user;
     }
+
+    public function getAllUser(){
+        return User::all();
+    }
+
+    public function getUserSearch($search){
+        return User::where('nama_lengkap', 'like', '%' . $search . '%')->get();
+    }
 }
