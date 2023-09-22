@@ -27,4 +27,8 @@ class Role extends Model
     public static function getAllRole(){
         return Role::all();
     }
+
+    public function getRoleSearch($search){
+        return Role::where('nama', 'like', '%'.$search.'%')->get();
+    }
 }
