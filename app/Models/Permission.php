@@ -27,4 +27,8 @@ class Permission extends Model
     public function getAllPermission(){
         return Permission::all();
     }
+
+    public function getPermissionSearch($search){
+        return Permission::where('nama', 'like', '%'.$search.'%')->get();
+    }
 }
