@@ -15,8 +15,8 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         Role::create([
-            'nama' => 'SuperAdmin',
-            'deskripsi' => 'SuperAdmin',
+            'nama' => 'Super Admin',
+            'deskripsi' => 'Super Admin',
             'jumlah_user' => '1',
             'created_date' => now(),
             'created_by' => now(),

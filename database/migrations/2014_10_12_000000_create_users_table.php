@@ -21,13 +21,13 @@ return new class extends Migration
             $table->bigInteger('no_handphone');
             $table->enum('gender', ['Pria', 'Wanita']);
             $table->string('alamat_lengkap', 255);
-            $table->bigInteger('NIK');
-            $table->string('nama_kampus/sekolah', 255);
+            $table->bigInteger('NIK')->nullable();
+            $table->string('nama_kampus/sekolah', 255)->nullable();
             $table->string('NIM', 255)->nullable();
             $table->string('NISN', 255)->nullable();
-            $table->string('jurusan/prodi', 13);
-            $table->bigInteger('kelas/semester');
-            $table->string('Keperluan');
+            $table->string('jurusan/prodi', 13)->nullable();
+            $table->bigInteger('kelas/semester')->nullable();
+            $table->string('Keperluan')->nullable();
             $table->enum('status', ['Aktif', 'Tidak Aktif']);
             $table->foreignId('role_id');
             $table->timestamp('login_terakhir')->nullable();
