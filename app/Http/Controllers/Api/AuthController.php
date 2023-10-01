@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use Validator;
 use App\Models\User;
+use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\LogAccount;
 
 class AuthController extends Controller
 {
@@ -18,6 +20,8 @@ class AuthController extends Controller
 
     public function loginStore(Request $request)
     {
+        $agent = new Agent();
+
         $credentials = $request->validate([
             'username' => 'required',
             'password' => 'required',
@@ -26,8 +30,21 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $user->tokens()->delete();
-            $user->login_terakhir = now();
+            $user->login_terakhir = now()->format('Y-m-d H:i:s');
             $user->save();
+
+            $logAccount = [
+                'user_id' =>  $user->id,
+                'ip_address' => $request->ip(),
+                'aktifitas' => 'Login',
+                'status' => 'successfully',
+                'browser' => $agent->browser(),
+                'os' => $agent->platform(),
+                'device' => $agent->device(),
+                'tanggal' => $user->login_terakhir,
+
+            ];
+            LogAccount::create($logAccount);
 
             return response()->json([
                 'success' => true,
@@ -35,6 +52,11 @@ class AuthController extends Controller
                 'data' => [
                     'token' => $user->createToken('authToken')->plainTextToken,
                     'nama_lengkap' => $user->nama_lengkap,
+                    'ip_address' => $request->ip(),
+                    'browser' => $agent->browser(),
+                    'os' => $agent->platform(),
+                    'device' => $agent->device(),
+                    'tanggal' => $user->login_terakhir,
                 ],
             ]);
 
