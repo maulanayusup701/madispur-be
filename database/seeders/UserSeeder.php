@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             'gender' => 'Pria',
             'alamat_lengkap' => 'Jl. Pahlawan',
             'status' => 'Aktif',
-            'role_id' => 1,
+            'role_id' => 2,
         ]);
     }
 }

@@ -94,9 +94,10 @@ class AuthController extends Controller
             'gender' => ['required', Rule::in(['Pria', 'Wanita', 'Lainnya']),],
             'alamat_lengkap' => 'required|max:255',
             'NIK' => 'required|numeric|digits:16',
-            'nama_kampus/sekolah' => 'required|max:255',
-            'jurusan/prodi' => 'required|max:255',
-            'kelas/semester' => ['required', Rule::in(['1', '2', '3', '4', '5', '6', '7', '8']),],
+            'nama_kampus_atau_sekolah' => 'required|max:255',
+            'jurusan_atau_prodi' => 'required|max:255',
+            'semenster' => ['required_if:role_id,3', Rule::in(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14']),],
+            'kelas' => ['required_if:role_id,4', Rule::in(['1', '2', '3']),],
             'Keperluan' => 'required|max:255',
         ]);
 

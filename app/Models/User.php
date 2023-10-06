@@ -29,11 +29,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'gender',
         'alamat_lengkap',
         'NIK',
-        'nama_kampus/sekolah',
+        'nama_kampus_atau_sekolah',
         'NIM',
         'NISN',
-        'jurusan/prodi',
-        'kelas/semester',
+        'jurusan_atau_prodi',
+        'kelas',
+        'semester',
         'Keperluan',
         'status',
         'role_id',
@@ -65,7 +66,19 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function getProfileUser(){
-        $user = auth()->user();
-        return $user;
+        return auth()->user();
     }
+
+    public function getAllAccountSuperAdmin(){
+        return User::where('role_id', '=', 1)->latest()->paginate(10);
+    }
+
+    public function getAllAccountAdmin(){
+        return User::where('role_id', '=', 2)->latest()->paginate(10);
+    }
+
+    public function getAllAccountPeserta(){
+        return User::where('role_id', '=', 3)->orWhere('role_id', '=', 4)->latest()->paginate(10);
+    }
+
 }

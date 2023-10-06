@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\SearchController;
@@ -10,6 +9,7 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\LogAccountController;
 use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\ResetPasswordController;
+use App\Http\Controllers\Api\Account\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,3 +57,4 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/dashboard/menu/search', [SearchController::class, 'menuSearch']);
     Route::get('/dashboard/aktivitas', [LogAccountController::class, 'index']);
 });
+Route::get('/dashboard/account', [AccountController::class, 'index']);
