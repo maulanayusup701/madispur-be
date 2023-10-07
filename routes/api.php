@@ -10,6 +10,9 @@ use App\Http\Controllers\Api\LogAccountController;
 use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\Account\AccountController;
+use App\Http\Controllers\Api\Account\AccountAdminController;
+use App\Http\Controllers\Api\Account\AccountPesertaController;
+use App\Http\Controllers\Api\Account\AccountSuperAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,3 +61,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard/aktivitas', [LogAccountController::class, 'index']);
 });
 Route::get('/dashboard/account', [AccountController::class, 'index']);
+Route::resource('/dashboard/account/super-admin', AccountSuperAdminController::class);
+Route::resource('/dashboard/account/admin', AccountAdminController::class);
+Route::resource('/dashboard/account/peserta', AccountPesertaController::class);

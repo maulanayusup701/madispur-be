@@ -81,4 +81,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return User::where('role_id', '=', 3)->orWhere('role_id', '=', 4)->latest()->paginate(10);
     }
 
+    public function findUser($id){
+        return User::find($id);
+    }
 }
