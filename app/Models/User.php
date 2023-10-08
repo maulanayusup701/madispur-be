@@ -69,19 +69,35 @@ class User extends Authenticatable implements MustVerifyEmail
         return auth()->user();
     }
 
+    public function findUser($id){
+        return User::find($id);
+    }
+
     public function getAllAccountSuperAdmin(){
-        return User::where('role_id', '=', 1)->latest()->paginate(10);
+        return User::where('role_id', 1)->paginate(10);
     }
 
     public function getAllAccountAdmin(){
-        return User::where('role_id', '=', 2)->latest()->paginate(10);
+        return User::where('role_id', 2)->paginate(10);
     }
 
     public function getAllAccountPeserta(){
-        return User::where('role_id', '=', 3)->orWhere('role_id', '=', 4)->latest()->paginate(10);
+        return User::where('role_id', 3)->orWhere('role_id', 4)->paginate(10);
     }
 
-    public function findUser($id){
-        return User::find($id);
+    public function getAccountSuperAdminSearch($search){
+        return User::where('role_id', 1)
+        ->when($search, fn($query) => $query->where('nama_lengkap', 'like', '%' . $search . '%'))
+        ->paginate(10);
+    }
+
+    public function getAccountAdminSearch($search){
+        return User::where('role_id', 2)
+        ->when($search, fn($query) => $query->where('nama_lengkap', 'like', '%' . $search . '%'))->paginate(10);
+    }
+
+    public function getAccountPesertaSearch($search){
+        return User::where('role_id', 3)->orWhere('role_id', 4)
+        ->when($search, fn($query) => $query->where('nama_lengkap', 'like', '%' . $search . '%'))->paginate(10);
     }
 }

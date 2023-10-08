@@ -28,9 +28,6 @@ use App\Http\Controllers\Api\Account\AccountSuperAdminController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('logout', [AuthController::class, 'logout']);
-});
 
 Route::middleware('guest')->group(function () {
     Route::controller(AuthController::class)->group(function () {
@@ -59,6 +56,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('/dashboard/menu', MenuController::class);
     Route::post('/dashboard/menu/search', [SearchController::class, 'menuSearch']);
     Route::get('/dashboard/aktivitas', [LogAccountController::class, 'index']);
+    Route::post('logout', [AuthController::class, 'logout']);
 });
 Route::get('/dashboard/account', [AccountController::class, 'index']);
 Route::resource('/dashboard/account/super-admin', AccountSuperAdminController::class);
