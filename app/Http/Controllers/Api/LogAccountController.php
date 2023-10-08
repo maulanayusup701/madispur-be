@@ -10,7 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class LogAccountController extends Controller
 {
-    public function construct(){
+    public function __construct(){
         $this->log = new LogAccount;
     }
 

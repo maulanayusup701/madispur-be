@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\SearchController;
@@ -10,6 +9,10 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\LogAccountController;
 use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\ResetPasswordController;
+use App\Http\Controllers\Api\Account\AccountController;
+use App\Http\Controllers\Api\Account\AccountAdminController;
+use App\Http\Controllers\Api\Account\AccountPesertaController;
+use App\Http\Controllers\Api\Account\AccountSuperAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +27,6 @@ use App\Http\Controllers\Api\ResetPasswordController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('logout', [AuthController::class, 'logout']);
 });
 
 Route::middleware('guest')->group(function () {
@@ -56,4 +56,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('/dashboard/menu', MenuController::class);
     Route::post('/dashboard/menu/search', [SearchController::class, 'menuSearch']);
     Route::get('/dashboard/aktivitas', [LogAccountController::class, 'index']);
+    Route::post('logout', [AuthController::class, 'logout']);
 });
+
+Route::get('/dashboard/account', [AccountController::class, 'index']);
+Route::resource('/dashboard/account/super-admin', AccountSuperAdminController::class);
+Route::resource('/dashboard/account/admin', AccountAdminController::class);
+Route::resource('/dashboard/account/peserta', AccountPesertaController::class);
